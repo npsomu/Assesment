@@ -7,8 +7,8 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.sample.assesment.assesmentapplication"
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion app_minsdkverion
+        targetSdkVersion app_maxsdkverion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -53,7 +53,7 @@ dependencies {
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$app_retrofitversion"
     implementation "com.squareup.retrofit2:converter-gson:$app_retrofitversion"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$app_coroutine_adapter"
 
     //OkHttp3
     implementation "com.squareup.okhttp3:okhttp:$app_okhttp"
@@ -62,8 +62,8 @@ dependencies {
 
     //Gson
     implementation "com.google.code.gson:gson:$app_gson"
-    compileOnly 'com.google.auto.value:auto-value:1.2'
-    annotationProcessor 'com.google.auto.value:auto-value:1.2'
+    compileOnly "com.google.auto.value:auto-value:$app_autogson"
+    annotationProcessor "com.google.auto.value:auto-value:$app_autogson"
 
 
     //Glide
@@ -74,10 +74,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-beta01"
 
     //Kotlin Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion"
-
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$app_coroutineversion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$app_coroutineversion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
