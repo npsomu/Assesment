@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SampleApplication</string>
+    <string name="dummyTitleString">Murdochs needed counselling after hacking scandal, says magazine</string>
+    <string name="dummyDescriptionString">NEW YORK : The British phone-hacking scandal brought simmering tensions. The British phone-hacking scandal brought simmering tensions. The British phone-hacking scandal brought simmering tensions.</string>
+    <string name="no_internet">Please check your internet connection..!!</string>
+    <string name="error">Something went wrong, please check your internet connection !!</string>
+</resources>
