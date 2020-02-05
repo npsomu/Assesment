@@ -8,6 +8,6 @@ import retrofit2.http.Path
 
 interface ApiService{
 
-    @GET("/{apikey}/facts.json")
+    @GET("/s/{apikey}/facts.json")
     fun getFacts (@Path("apikey") key : String) : Deferred<Response<Facts>>
 }

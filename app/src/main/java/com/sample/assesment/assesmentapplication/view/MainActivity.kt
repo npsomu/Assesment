@@ -2,10 +2,8 @@ package com.sample.assesment.assesmentapplication.view
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,7 +15,6 @@ import com.sample.assesment.assesmentapplication.data.model.Facts
 import com.sample.assesment.assesmentapplication.databinding.ActivityMainBinding
 import com.sample.assesment.assesmentapplication.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.recylerview_row_layout.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProviders.of(this,factory).get(MainViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initView()
-        binding.modeldata = mainViewModel
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -89,8 +85,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateList(facts: Facts) {
-        title_text.text = facts.title
-        recyclerViewAdapter = RecyclerViewAdapter(applicationContext,facts.rows)
+        toolbar_title_text.text = facts.title
+        val data = facts.rows?.filter { it.title!=null}?.filter {  it.description!=null }?.filter {  it.imageHref!=null }
+        recyclerViewAdapter = RecyclerViewAdapter(data)
         recyclerview.adapter = recyclerViewAdapter
     }
 }

@@ -1,7 +1,6 @@
 package com.sample.assesment.assesmentapplication.viewmodel
 
 import android.app.Application
-import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,7 +30,7 @@ class MainViewModel(val mApplication: Application, val mApiKey: String) : ViewMo
                         if (result.isSuccessful) {
                             var resposne = result.body()
                             resposne?.let {
-                                mFactsData.value = resposne
+                                mFactsData.postValue(resposne)
                             }
                         } else {
                             // response not get

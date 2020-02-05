@@ -1,19 +1,9 @@
 package com.sample.assesment.assesmentapplication.data.model
 
-import com.google.auto.value.AutoValue
+import com.google.gson.annotations.SerializedName
+data class CountryInfoItem (
 
-@AutoValue
-abstract class CountryInfoItem {
-
-    companion object {
-        fun create( description: String,
-                    imageHref: String,
-                    title: String): CountryInfoItem {
-            return create(description, imageHref, title)
-        }
-    }
-
-    abstract fun description(): String
-    abstract fun imageHref(): String
-    abstract fun title(): String
-}
+    @SerializedName("title") val title : String?,
+    @SerializedName("description") val description : String?,
+    @SerializedName("imageHref") val imageHref : String?
+)

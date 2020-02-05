@@ -1,6 +1,9 @@
 package com.sample.assesment.assesmentapplication.data.model
 
+import com.google.gson.annotations.SerializedName
+
+
 data class Facts(
-    val rows: List<CountryInfoItem>,
-    val title: String
+    @SerializedName("title") val title : String?,
+    @SerializedName("rows") val rows : List<CountryInfoItem>?
 )

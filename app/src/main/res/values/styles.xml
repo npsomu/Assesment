@@ -17,6 +17,7 @@
         <item name="android:typeface">serif</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:padding">@dimen/dimension_1dp</item>
+        <item name="android:layout_margin">@dimen/dimension_5dp</item>
     </style>
 
     <style name="DescriptionTextApperance" parent="TextAppearance.AppCompat">
@@ -31,8 +32,10 @@
         <item name="android:textAlignment">textStart</item>
         <item name="android:layout_marginEnd">@dimen/dimension_5dp</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:layout_margin">@dimen/dimension_5dp</item>
+    </style>
 
-    </style> <style name="toobartitle" parent="TextAppearance.AppCompat">
+    <style name="toobartitle" parent="TextAppearance.AppCompat">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorWhite</item>
