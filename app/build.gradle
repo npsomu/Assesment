@@ -26,12 +26,6 @@ android {
         }
     }
     dataBinding.enabled = true
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
-
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
