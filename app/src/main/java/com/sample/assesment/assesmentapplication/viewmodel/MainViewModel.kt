@@ -1,25 +1,45 @@
 package com.sample.assesment.assesmentapplication.viewmodel
 
-import android.app.Application
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.sample.assesment.assesmentapplication.R
+import com.sample.assesment.assesmentapplication.common.NetworkCallBack
 import com.sample.assesment.assesmentapplication.data.model.Facts
 import com.sample.assesment.assesmentapplication.data.remote.ApiClient
+import com.sample.assesment.assesmentapplication.view.MainActivity
 import kotlinx.coroutines.*
 import retrofit2.Response
 
-class MainViewModel(val mApplication: Application, val mApiKey: String) : ViewModel(){
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+class MainViewModel(private val mApplication: MainActivity, private val mApiKey: String) : ViewModel(){
+
+    private val connectionLiveData : LiveData<Boolean>
+
+    init {
+        connectionLiveData = NetworkCallBack(mApplication)
+    }
 
     val mFactsData : MutableLiveData<Facts> by lazy {
         MutableLiveData<Facts>().also{
-            loadDataList(mApiKey)
+            connectionLiveData.observe(mApplication, Observer <Boolean>{
+                if(it == true){
+                    loadDataList(mApiKey)
+                }else{
+                    error.postValue(mApplication.getString(R.string.error))
+                }
+            })
         }
     }
+
     val error = MutableLiveData<String>()
 
     fun loadDataList(mApiKey: String) {
+
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 withContext(Dispatchers.IO) {
@@ -55,3 +75,4 @@ class MainViewModel(val mApplication: Application, val mApiKey: String) : ViewMo
     }
 
 }
+

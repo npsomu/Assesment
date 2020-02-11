@@ -1,15 +1,19 @@
 package com.sample.assesment.assesmentapplication.view
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.View.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.sample.assesment.assesmentapplication.R
+import com.sample.assesment.assesmentapplication.common.NetworkCallBack
 import com.sample.assesment.assesmentapplication.data.common.AppConstant
 import com.sample.assesment.assesmentapplication.data.model.Facts
 import com.sample.assesment.assesmentapplication.databinding.ActivityMainBinding
@@ -19,18 +23,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainViewModel : MainViewModel
-    private lateinit var binding : ActivityMainBinding
-    var recyclerViewAdapter : RecyclerViewAdapter? = null
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var binding: ActivityMainBinding
+    var recyclerViewAdapter: RecyclerViewAdapter? = null
+    private lateinit var connectionLiveData: LiveData<Boolean>
 
-    companion object{
+    companion object {
         private const val TAG = "MainActivity"
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val factory = ViewmodelFactory(application,AppConstant.APIKEY)
-        mainViewModel = ViewModelProviders.of(this,factory).get(MainViewModel::class.java)
+        val factory = ViewmodelFactory(this@MainActivity, AppConstant.APIKEY)
+        mainViewModel = ViewModelProviders.of(this@MainActivity, factory).get(MainViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initView()
     }
@@ -60,33 +66,46 @@ class MainActivity : AppCompatActivity() {
                 or SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun initView() {
         toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp)
+        connectionLiveData = NetworkCallBack(this)
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.setHasFixedSize(true)
         swipe_container.setOnRefreshListener {
             getDataFromServer()
             swipe_container.isRefreshing = false
         }
-        mainViewModel.mFactsData.observe(this, Observer<Facts> {Facts -> updateList(Facts)  })
+
+        mainViewModel.mFactsData.observe(this, Observer<Facts> { Facts -> updateList(Facts) })
         mainViewModel.error.observe(
-             this, Observer<String> {
+            this, Observer<String> {
                 showError(it)
             }
         )
     }
 
     private fun showError(msg: String) {
-        Snackbar.make(contraint_layout,msg,Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(contraint_layout, msg, Snackbar.LENGTH_SHORT).show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun getDataFromServer() {
-        mainViewModel.loadDataList(AppConstant.APIKEY)
+        connectionLiveData.observe(this, Observer<Boolean> {
+            if (it == true) {
+                mainViewModel.loadDataList(AppConstant.APIKEY)
+            } else {
+                showError(this.getString(R.string.error))
+            }
+
+        })
+
     }
 
     private fun updateList(facts: Facts) {
         toolbar_title_text.text = facts.title
-        val data = facts.rows?.filter { it.title!=null}?.filter {  it.description!=null }?.filter {  it.imageHref!=null }
+        val data = facts.rows?.filter { it.title != null }?.filter { it.description != null }
+            ?.filter { it.imageHref != null }
         recyclerViewAdapter = RecyclerViewAdapter(data)
         recyclerview.adapter = recyclerViewAdapter
     }

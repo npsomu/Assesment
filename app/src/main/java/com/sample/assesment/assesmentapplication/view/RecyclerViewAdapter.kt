@@ -10,7 +10,7 @@ import com.sample.assesment.assesmentapplication.data.model.CountryInfoItem
 import com.sample.assesment.assesmentapplication.databinding.RecylerviewRowLayoutBinding
 
 
-class RecyclerViewAdapter (val listitemrows: List<CountryInfoItem>?) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter (private val listitemrows: List<CountryInfoItem>?) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding : RecylerviewRowLayoutBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.recylerview_row_layout, parent, false)
