@@ -30,6 +30,9 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -71,7 +74,12 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$app_coroutineversion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$app_coroutineversion"
 
+
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
+    testImplementation 'android.arch.core:core-testing:1.1.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
