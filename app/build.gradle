@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.sample.assesment.assesmentapplication"
+        minSdkVersion app_minsdkverion
+        targetSdkVersion app_maxsdkverion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding.enabled = true
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    kapt "com.android.databinding:compiler:$app_databinding"
+    implementation "androidx.appcompat:appcompat:$app_supportlibrary"
+    implementation "androidx.core:core-ktx:$app_supportlibrary"
+    implementation "androidx.constraintlayout:constraintlayout:$app_contraintlayout"
+    implementation "androidx.recyclerview:recyclerview:$app_supportlibrary"
+    implementation "androidx.cardview:cardview:$app_cardlibrary"
+    implementation "com.google.android.material:material:$app_cardlibrary"
+
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$app_retrofitversion"
+    implementation "com.squareup.retrofit2:converter-gson:$app_retrofitversion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$app_coroutine_adapter"
+
+    //OkHttp3
+    implementation "com.squareup.okhttp3:okhttp:$app_okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$app_retrofit_interceptorVersion"
+
+
+    //Gson
+    implementation "com.google.code.gson:gson:$app_gson"
+    compileOnly "com.google.auto.value:auto-value:$app_autogson"
+    annotationProcessor "com.google.auto.value:auto-value:$app_autogson"
+
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$app_glideversion"
+    kapt "com.github.bumptech.glide:compiler:$app_glideversion"
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-beta01"
+
+    //Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$app_coroutineversion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$app_coroutineversion"
+
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
+    testImplementation 'android.arch.core:core-testing:1.1.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
